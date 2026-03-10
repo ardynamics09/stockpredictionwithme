@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+<title>Stock Prediction</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+<nav>
+<a href="index.html">Home</a> |
+<a href="predict.html">Prediction</a> |
+<a href="about.html">About</a>
+</nav>
+
+<hr>
+
+<h1>Stock Investment Simulator</h1>
+
+<p>You can calculate your own stock value and its profit or loss.</p>
+
+<h2>Select Company</h2>
+
+<select id="company">
+<option>Apple (AAPL)</option>
+<option>Microsoft (MSFT)</option>
+<option>NVIDIA (NVDA)</option>
+<option>Amazon (AMZN)</option>
+<option>Alphabet Class A (GOOGL)</option>
+<option>Alphabet Class C (GOOG)</option>
+<option>Meta Platforms (META)</option>
+<option>Tesla (TSLA)</option>
+<option>Broadcom (AVGO)</option>
+<option>PepsiCo (PEP)</option>
+<option>Costco (COST)</option>
+<option>Adobe (ADBE)</option>
+<option>Netflix (NFLX)</option>
+<option>AMD (AMD)</option>
+<option>Intel (INTC)</option>
+<option>Qualcomm (QCOM)</option>
+<option>Cisco Systems (CSCO)</option>
+<option>Texas Instruments (TXN)</option>
+<option>Intuit (INTU)</option>
+<option>Booking Holdings (BKNG)</option>
+<option>Applied Materials (AMAT)</option>
+<option>Micron Technology (MU)</option>
+<option>Analog Devices (ADI)</option>
+<option>Lam Research (LRCX)</option>
+<option>Automatic Data Processing (ADP)</option>
+<option>Gilead Sciences (GILD)</option>
+<option>Starbucks (SBUX)</option>
+<option>Mondelez (MDLZ)</option>
+<option>PayPal (PYPL)</option>
+<option>Airbnb (ABNB)</option>
+<option>eBay (EBAY)</option>
+<option>Zoom (ZM)</option>
+<option>DocuSign (DOCU)</option>
+<option>Moderna (MRNA)</option>
+<option>Illumina (ILMN)</option>
+<option>Biogen (BIIB)</option>
+<option>Vertex Pharmaceuticals (VRTX)</option>
+<option>Synopsys (SNPS)</option>
+<option>Cadence Design Systems (CDNS)</option>
+<option>Fortinet (FTNT)</option>
+<option>Palo Alto Networks (PANW)</option>
+<option>CrowdStrike (CRWD)</option>
+<option>Zscaler (ZS)</option>
+<option>Datadog (DDOG)</option>
+<option>Snowflake (SNOW)</option>
+<option>MongoDB (MDB)</option>
+<option>Atlassian (TEAM)</option>
+<option>Workday (WDAY)</option>
+<option>Okta (OKTA)</option>
+</select>
+
+<h3>Number of Stocks</h3>
+<input type="number" id="shares" placeholder="Example: 10">
+
+<h3>Select Prediction Period</h3>
+<select id="period">
+<option>1 Day</option>
+<option>1 Month</option>
+<option>3 Months</option>
+<option>6 Months</option>
+<option>12 Months</option>
+<option>18 Months</option>
+<option>24 Months</option>
+<option>30 Months</option>
+<option>36 Months</option>
+<option>42 Months</option>
+<option>48 Months</option>
+<option>54 Months</option>
+<option>60 Months</option>
+</select>
+
+<br><br>
+
+<button onclick="calculatePrediction()">Calculate Prediction</button>
+
+<h2>Prediction Result</h2>
+<div id="result">Result will appear here</div>
+
+<h2>Stock Price Graph</h2>
+<canvas id="graph" width="400" height="200"></canvas>
+
+<hr>
+
+<p>Developed by Aniket Raj</p>
+
+<script>
+async function calculatePrediction() {
+
+    let stock = document.getElementById("company").value;
+    let shares = document.getElementById("shares").value;
+    let period = document.getElementById("period").value;
+
+    if(shares === ""){
+        document.getElementById("result").innerHTML = "Please enter number of stocks.";
+        return;
+    }
+
+    let months = parseInt(period);
+    let symbol = stock.match(/\((.*?)\)/)[1];
+    let apiKey = "FF0ONX9ZGHT7KV88"; // use your API key
+
+    let response = await fetch(
+        "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=" + symbol + "&apikey=" + apiKey
+    );
+
+    let data = await response.json();
+    let series = data["Time Series (Daily)"];
+
+    let labels = [];
+    let prices = [];
+    let count = 0;
+
+    // --- Past 1 year data ---
+    for(let date in series){
+        labels.push(date);
+        prices.push(parseFloat(series[date]["4. close"]));
+        count++;
+        if(count === 365) break; // last 1 year
+    }
+
+    labels.reverse();
+    prices.reverse();
+
+    let currentPrice = prices[prices.length-1];
+    let totalValue = currentPrice * shares;
+
+    // --- Prediction Logic ---
+    let oldestPrice = prices[0];
+    let latestPrice = prices[prices.length-1];
+    let growthRate = (latestPrice - oldestPrice) / oldestPrice;
+
+    let futurePrices = [];
+    let futureLabels = [];
+
+    for(let i=1; i<=months; i++){
+        let nextMonth = new Date(labels[labels.length-1]);
+        nextMonth.setMonth(nextMonth.getMonth() + i);
+        futureLabels.push(nextMonth.toISOString().split('T')[0]);
+        let predictedPrice = currentPrice * Math.pow((1 + growthRate), i/12);
+        futurePrices.push(predictedPrice);
+    }
+
+    let futurePrice = futurePrices[futurePrices.length-1];
+    let difference = futurePrice - currentPrice;
+    let profitPercent = (difference / currentPrice) * 100;
+
+    // --- Risk Calculation ---
+    let mean = prices.reduce((a,b)=>a+b,0) / prices.length;
+    let variance = prices.reduce((a,b)=> a + Math.pow(b-mean,2),0) / prices.length;
+    let risk = Math.sqrt(variance);
+    let riskReturn = profitPercent / risk;
+
+    let investmentAdvice = "";
+    if(riskReturn > 1){
+        investmentAdvice = "Good Investment (High return compared to risk)";
+    }
+    else if(riskReturn > 0.5){
+        investmentAdvice = "Moderate Investment (Average risk-return balance)";
+    }
+    else{
+        investmentAdvice = "Bad Investment (Risk higher than expected return)";
+    }
+
+    // --- Display Result ---
+    document.getElementById("result").innerHTML =
+        "Current price of " + stock + " : $" + currentPrice.toFixed(2) +
+        "<br>Total value of your shares: $" + totalValue.toFixed(2) +
+        "<br><br><b>Prediction after " + months + " months</b>" +
+        "<br>Future Price: $" + futurePrice.toFixed(2) +
+        "<br>Difference: $" + difference.toFixed(2) +
+        "<br>Profit / Loss: " + profitPercent.toFixed(2) + "%" +
+        "<br>Risk-Return Ratio: " + riskReturn.toFixed(2) +
+        "<br><b>Investment Advice: " + investmentAdvice + "</b>";
+
+    // --- Graph ---
+    let ctx = document.getElementById("graph").getContext("2d");
+
+    new Chart(ctx,{
+        type:"line",
+        data:{
+            labels: labels.concat(futureLabels),
+            datasets:[
+                {
+                    label:"Past 1 Year Stock Price ($)",
+                    data: prices.concat(Array(futureLabels.length).fill(null)),
+                    borderColor:"blue",
+                    fill:false,
+                    tension:0.2
+                },
+                {
+                    label:"Future Prediction ($)",
+                    data: Array(prices.length).fill(null).concat(futurePrices),
+                    borderColor:"orange",
+                    borderDash: [10,5],
+                    fill:false,
+                    tension:0.2
+                }
+            ]
+        },
+        options:{
+            responsive:true,
+            plugins:{
+                title:{display:true,text:"Stock Price Trend + Prediction"},
+                tooltip:{mode:'index',intersect:false}
+            },
+            interaction:{
+                mode:'index',
+                intersect:false
+            },
+            scales:{
+                x:{title:{display:true,text:"Date"}},
+                y:{title:{display:true,text:"Price (USD)"}}
+            }
+        }
+    });
+
+}
+</script>
+
+</body>
+</html>
