@@ -1,4 +1,4 @@
-<img width="1918" height="901" alt="About" src="https://github.com/user-attachments/assets/f8a6c01b-229e-4f62-9a19-361e43807c67" /># Stock Prediction With Me 📈
+# Stock Prediction With Me 📈
 
 An interactive stock prediction web application that fetches real market data and visualizes historical trends along with future price predictions.
 
