@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-
 <html>
 
 <head>
 <title>Stock Prediction</title>
 <link rel="stylesheet" href="style.css">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
 <body>
@@ -100,148 +101,196 @@
 
 <button onclick="calculatePrediction()">Calculate Prediction</button>
 
+<!-- LOADER -->
+<div id="loader" style="display:none;">Loading data...</div>
+
 <h2>Prediction Result</h2>
 <div id="result">Result will appear here</div>
 
 <h2>Stock Price Graph</h2>
-<canvas id="graph" width="400" height="200"></canvas>
+<div class="chart-container">
+<canvas id="graph"></canvas>
+</div>
 
 <hr>
 
-<p>Developed by Aniket Raj</p>
+<footer>
+
+<p>© 2026 StocksPredictionWithMe</p>
+
+<p>
+Developed by <b>Aniket Raj</b><br>
+B.Tech Mathematics and Computing
+</p>
+
+<p>
+<a href="https://github.com/ardynamics09" target="_blank">
+<i class="fab fa-github"></i>
+</a>
+</p>
+
+</footer>
 
 <script>
+
+let chart;
+
 async function calculatePrediction() {
 
-    let stock = document.getElementById("company").value;
-    let shares = document.getElementById("shares").value;
-    let period = document.getElementById("period").value;
+document.getElementById("loader").style.display="block";
 
-    if(shares === ""){
-        document.getElementById("result").innerHTML = "Please enter number of stocks.";
-        return;
-    }
+let stock = document.getElementById("company").value;
+let shares = document.getElementById("shares").value;
+let period = document.getElementById("period").value;
 
-    let months = parseInt(period);
-    let symbol = stock.match(/\((.*?)\)/)[1];
-    let apiKey = "FF0ONX9ZGHT7KV88"; // use your API key
+if(shares === ""){
+document.getElementById("result").innerHTML="Please enter number of stocks.";
+document.getElementById("loader").style.display="none";
+return;
+}
 
-    let response = await fetch(
-        "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=" + symbol + "&apikey=" + apiKey
-    );
+let months=parseInt(period);
+let symbol=stock.match(/\((.*?)\)/)[1];
+let apiKey="FF0ONX9ZGHT7KV88";
 
-    let data = await response.json();
-    let series = data["Time Series (Daily)"];
+let response=await fetch(
+"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol="+symbol+"&apikey="+apiKey
+);
 
-    let labels = [];
-    let prices = [];
-    let count = 0;
+let data=await response.json();
+let series=data["Time Series (Daily)"];
 
-    // --- Past 1 year data ---
-    for(let date in series){
-        labels.push(date);
-        prices.push(parseFloat(series[date]["4. close"]));
-        count++;
-        if(count === 365) break; // last 1 year
-    }
+let labels=[];
+let prices=[];
+let count=0;
 
-    labels.reverse();
-    prices.reverse();
+for(let date in series){
+labels.push(date);
+prices.push(parseFloat(series[date]["4. close"]));
+count++;
+if(count===365) break;
+}
 
-    let currentPrice = prices[prices.length-1];
-    let totalValue = currentPrice * shares;
+labels.reverse();
+prices.reverse();
 
-    // --- Prediction Logic ---
-    let oldestPrice = prices[0];
-    let latestPrice = prices[prices.length-1];
-    let growthRate = (latestPrice - oldestPrice) / oldestPrice;
+let currentPrice=prices[prices.length-1];
+let totalValue=currentPrice*shares;
 
-    let futurePrices = [];
-    let futureLabels = [];
+let oldestPrice=prices[0];
+let latestPrice=prices[prices.length-1];
+let growthRate=(latestPrice-oldestPrice)/oldestPrice;
 
-    for(let i=1; i<=months; i++){
-        let nextMonth = new Date(labels[labels.length-1]);
-        nextMonth.setMonth(nextMonth.getMonth() + i);
-        futureLabels.push(nextMonth.toISOString().split('T')[0]);
-        let predictedPrice = currentPrice * Math.pow((1 + growthRate), i/12);
-        futurePrices.push(predictedPrice);
-    }
+let futurePrices=[];
+let futureLabels=[];
 
-    let futurePrice = futurePrices[futurePrices.length-1];
-    let difference = futurePrice - currentPrice;
-    let profitPercent = (difference / currentPrice) * 100;
+for(let i=1;i<=months;i++){
+let nextMonth=new Date(labels[labels.length-1]);
+nextMonth.setMonth(nextMonth.getMonth()+i);
+futureLabels.push(nextMonth.toISOString().split('T')[0]);
+let predictedPrice=currentPrice*Math.pow((1+growthRate),i/12);
+futurePrices.push(predictedPrice);
+}
 
-    // --- Risk Calculation ---
-    let mean = prices.reduce((a,b)=>a+b,0) / prices.length;
-    let variance = prices.reduce((a,b)=> a + Math.pow(b-mean,2),0) / prices.length;
-    let risk = Math.sqrt(variance);
-    let riskReturn = profitPercent / risk;
+let futurePrice=futurePrices[futurePrices.length-1];
+let difference=futurePrice-currentPrice;
+let profitPercent=(difference/currentPrice)*100;
 
-    let investmentAdvice = "";
-    if(riskReturn > 1){
-        investmentAdvice = "Good Investment (High return compared to risk)";
-    }
-    else if(riskReturn > 0.5){
-        investmentAdvice = "Moderate Investment (Average risk-return balance)";
-    }
-    else{
-        investmentAdvice = "Bad Investment (Risk higher than expected return)";
-    }
+let mean=prices.reduce((a,b)=>a+b,0)/prices.length;
+let variance=prices.reduce((a,b)=>a+Math.pow(b-mean,2),0)/prices.length;
+let risk=Math.sqrt(variance);
+let riskReturn=profitPercent/risk;
 
-    // --- Display Result ---
-    document.getElementById("result").innerHTML =
-        "Current price of " + stock + " : $" + currentPrice.toFixed(2) +
-        "<br>Total value of your shares: $" + totalValue.toFixed(2) +
-        "<br><br><b>Prediction after " + months + " months</b>" +
-        "<br>Future Price: $" + futurePrice.toFixed(2) +
-        "<br>Difference: $" + difference.toFixed(2) +
-        "<br>Profit / Loss: " + profitPercent.toFixed(2) + "%" +
-        "<br>Risk-Return Ratio: " + riskReturn.toFixed(2) +
-        "<br><b>Investment Advice: " + investmentAdvice + "</b>";
+let predictionScore = 100 - (risk * 2);
 
-    // --- Graph ---
-    let ctx = document.getElementById("graph").getContext("2d");
+if(predictionScore > 95){
+predictionScore = 95;
+}
 
-    new Chart(ctx,{
-        type:"line",
-        data:{
-            labels: labels.concat(futureLabels),
-            datasets:[
-                {
-                    label:"Past 1 Year Stock Price ($)",
-                    data: prices.concat(Array(futureLabels.length).fill(null)),
-                    borderColor:"blue",
-                    fill:false,
-                    tension:0.2
-                },
-                {
-                    label:"Future Prediction ($)",
-                    data: Array(prices.length).fill(null).concat(futurePrices),
-                    borderColor:"orange",
-                    borderDash: [10,5],
-                    fill:false,
-                    tension:0.2
-                }
-            ]
-        },
-        options:{
-            responsive:true,
-            plugins:{
-                title:{display:true,text:"Stock Price Trend + Prediction"},
-                tooltip:{mode:'index',intersect:false}
-            },
-            interaction:{
-                mode:'index',
-                intersect:false
-            },
-            scales:{
-                x:{title:{display:true,text:"Date"}},
-                y:{title:{display:true,text:"Price (USD)"}}
-            }
-        }
-    });
+if(predictionScore < 40){
+predictionScore = 40;
+}
+
+let investmentAdvice="";
+
+if(riskReturn>1){
+investmentAdvice="Good Investment";
+}
+else if(riskReturn>0.5){
+investmentAdvice="Moderate Investment";
+}
+else{
+investmentAdvice="Bad Investment";
+}
+let investmentSignal = "";
+
+if(profitPercent > 8 && riskReturn > 0.8){
+investmentSignal = "BUY 🟢";
+}
+else if(profitPercent > 3){
+investmentSignal = "HOLD 🟡";
+}
+else{
+investmentSignal = "AVOID 🔴";
+}
+
+document.getElementById("result").innerHTML=
+"Current price of "+stock+" : $"+currentPrice.toFixed(2)+
+"<br>Total value of your shares: $"+totalValue.toFixed(2)+
+"<br><br><b>Prediction after "+months+" months</b>"+
+"<br>Future Price: $"+futurePrice.toFixed(2)+
+"<br>Profit / Loss: "+profitPercent.toFixed(2)+"%"+
+"<br>Risk-Return Ratio: "+riskReturn.toFixed(2)+
+"<br>Prediction Confidence: "+predictionScore.toFixed(0)+"%" +
+"<br><b>Investment Signal: "+investmentSignal+"</b>" +
+"<br><b>Investment Advice: "+investmentAdvice+"</b>";
+
+let ctx=document.getElementById("graph").getContext("2d");
+
+if(chart){
+chart.destroy();
+}
+
+chart=new Chart(ctx,{
+type:"line",
+data:{
+labels:labels.concat(futureLabels),
+datasets:[
+{
+label:"Past 1 Year Stock Price ($)",
+data:prices.concat(Array(futureLabels.length).fill(null)),
+borderColor:"blue",
+fill:false,
+tension:0.2
+},
+{
+label:"Future Prediction ($)",
+data:Array(prices.length).fill(null).concat(futurePrices),
+borderColor:"orange",
+borderDash:[10,5],
+fill:false,
+tension:0.2
+}
+]
+},
+options:{
+responsive:true,
+maintainAspectRatio:false,
+plugins:{
+title:{display:true,text:"Stock Price Trend + Prediction"},
+tooltip:{mode:'index',intersect:false}
+},
+interaction:{
+mode:'index',
+intersect:false
+}
+}
+});
+
+document.getElementById("loader").style.display="none";
 
 }
+
 </script>
 
 </body>
