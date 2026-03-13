@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Stock Comparison Simulator</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+
+<nav>
+<a href="index.html">Home</a> |
+<a href="predict.html">Prediction</a> |
+<a href="compare.html">Compare Stocks</a> |
+<a href="about.html">About</a>
+</nav>
+
+<hr>
+
+<h1>Stock Comparison Simulator</h1>
+<p>Compare multiple stocks and find which investment may give better returns.</p>
+
+<h2>Select Stocks</h2>
+
+<select id="stock1">
+<option>Apple (AAPL)</option>
+<option>Microsoft (MSFT)</option>
+<option>NVIDIA (NVDA)</option>
+<option>Amazon (AMZN)</option>
+<option>Alphabet Class A (GOOGL)</option>
+<option>Alphabet Class C (GOOG)</option>
+<option>Meta Platforms (META)</option>
+<option>Tesla (TSLA)</option>
+<option>Broadcom (AVGO)</option>
+<option>PepsiCo (PEP)</option>
+<option>Costco (COST)</option>
+<option>Adobe (ADBE)</option>
+<option>Netflix (NFLX)</option>
+<option>AMD (AMD)</option>
+<option>Intel (INTC)</option>
+<option>Qualcomm (QCOM)</option>
+<option>Cisco Systems (CSCO)</option>
+<option>Texas Instruments (TXN)</option>
+<option>Intuit (INTU)</option>
+<option>Booking Holdings (BKNG)</option>
+<option>Applied Materials (AMAT)</option>
+<option>Micron Technology (MU)</option>
+<option>Analog Devices (ADI)</option>
+<option>Lam Research (LRCX)</option>
+<option>Automatic Data Processing (ADP)</option>
+<option>Gilead Sciences (GILD)</option>
+<option>Starbucks (SBUX)</option>
+<option>Mondelez (MDLZ)</option>
+<option>PayPal (PYPL)</option>
+<option>Airbnb (ABNB)</option>
+<option>eBay (EBAY)</option>
+<option>Zoom (ZM)</option>
+<option>DocuSign (DOCU)</option>
+<option>Moderna (MRNA)</option>
+<option>Illumina (ILMN)</option>
+<option>Biogen (BIIB)</option>
+<option>Vertex Pharmaceuticals (VRTX)</option>
+<option>Synopsys (SNPS)</option>
+<option>Cadence Design Systems (CDNS)</option>
+<option>Fortinet (FTNT)</option>
+<option>Palo Alto Networks (PANW)</option>
+<option>CrowdStrike (CRWD)</option>
+<option>Zscaler (ZS)</option>
+<option>Datadog (DDOG)</option>
+<option>Snowflake (SNOW)</option>
+<option>MongoDB (MDB)</option>
+<option>Atlassian (TEAM)</option>
+<option>Workday (WDAY)</option>
+<option>Okta (OKTA)</option>
+</select>
+
+<select id="stock2">
+<option>Apple (AAPL)</option>
+<option>Microsoft (MSFT)</option>
+<option>NVIDIA (NVDA)</option>
+<option>Amazon (AMZN)</option>
+<option>Alphabet Class A (GOOGL)</option>
+<option>Alphabet Class C (GOOG)</option>
+<option>Meta Platforms (META)</option>
+<option>Tesla (TSLA)</option>
+<option>Broadcom (AVGO)</option>
+<option>PepsiCo (PEP)</option>
+<option>Costco (COST)</option>
+<option>Adobe (ADBE)</option>
+<option>Netflix (NFLX)</option>
+<option>AMD (AMD)</option>
+<option>Intel (INTC)</option>
+<option>Qualcomm (QCOM)</option>
+<option>Cisco Systems (CSCO)</option>
+<option>Texas Instruments (TXN)</option>
+<option>Intuit (INTU)</option>
+<option>Booking Holdings (BKNG)</option>
+<option>Applied Materials (AMAT)</option>
+<option>Micron Technology (MU)</option>
+<option>Analog Devices (ADI)</option>
+<option>Lam Research (LRCX)</option>
+<option>Automatic Data Processing (ADP)</option>
+<option>Gilead Sciences (GILD)</option>
+<option>Starbucks (SBUX)</option>
+<option>Mondelez (MDLZ)</option>
+<option>PayPal (PYPL)</option>
+<option>Airbnb (ABNB)</option>
+<option>eBay (EBAY)</option>
+<option>Zoom (ZM)</option>
+<option>DocuSign (DOCU)</option>
+<option>Moderna (MRNA)</option>
+<option>Illumina (ILMN)</option>
+<option>Biogen (BIIB)</option>
+<option>Vertex Pharmaceuticals (VRTX)</option>
+<option>Synopsys (SNPS)</option>
+<option>Cadence Design Systems (CDNS)</option>
+<option>Fortinet (FTNT)</option>
+<option>Palo Alto Networks (PANW)</option>
+<option>CrowdStrike (CRWD)</option>
+<option>Zscaler (ZS)</option>
+<option>Datadog (DDOG)</option>
+<option>Snowflake (SNOW)</option>
+<option>MongoDB (MDB)</option>
+<option>Atlassian (TEAM)</option>
+<option>Workday (WDAY)</option>
+<option>Okta (OKTA)</option>
+</select>
+
+<select id="stock3">
+<option>None</option>
+<option>Apple (AAPL)</option>
+<option>Microsoft (MSFT)</option>
+<option>NVIDIA (NVDA)</option>
+<option>Amazon (AMZN)</option>
+<option>Alphabet Class A (GOOGL)</option>
+<option>Alphabet Class C (GOOG)</option>
+<option>Meta Platforms (META)</option>
+<option>Tesla (TSLA)</option>
+<option>Broadcom (AVGO)</option>
+<option>PepsiCo (PEP)</option>
+<option>Costco (COST)</option>
+<option>Adobe (ADBE)</option>
+<option>Netflix (NFLX)</option>
+<option>AMD (AMD)</option>
+<option>Intel (INTC)</option>
+<option>Qualcomm (QCOM)</option>
+<option>Cisco Systems (CSCO)</option>
+<option>Texas Instruments (TXN)</option>
+<option>Intuit (INTU)</option>
+<option>Booking Holdings (BKNG)</option>
+<option>Applied Materials (AMAT)</option>
+<option>Micron Technology (MU)</option>
+<option>Analog Devices (ADI)</option>
+<option>Lam Research (LRCX)</option>
+<option>Automatic Data Processing (ADP)</option>
+<option>Gilead Sciences (GILD)</option>
+<option>Starbucks (SBUX)</option>
+<option>Mondelez (MDLZ)</option>
+<option>PayPal (PYPL)</option>
+<option>Airbnb (ABNB)</option>
+<option>eBay (EBAY)</option>
+<option>Zoom (ZM)</option>
+<option>DocuSign (DOCU)</option>
+<option>Moderna (MRNA)</option>
+<option>Illumina (ILMN)</option>
+<option>Biogen (BIIB)</option>
+<option>Vertex Pharmaceuticals (VRTX)</option>
+<option>Synopsys (SNPS)</option>
+<option>Cadence Design Systems (CDNS)</option>
+<option>Fortinet (FTNT)</option>
+<option>Palo Alto Networks (PANW)</option>
+<option>CrowdStrike (CRWD)</option>
+<option>Zscaler (ZS)</option>
+<option>Datadog (DDOG)</option>
+<option>Snowflake (SNOW)</option>
+<option>MongoDB (MDB)</option>
+<option>Atlassian (TEAM)</option>
+<option>Workday (WDAY)</option>
+<option>Okta (OKTA)</option>
+</select>
+
+<h3>Investment Amount ($)</h3>
+<input type="number" id="investment" placeholder="Example: 1000">
+
+<h3>Prediction Period</h3>
+
+<select id="period">
+<option>10 Days</option>
+<option>1 Month</option>
+<option>3 Months</option>
+<option>6 Months</option>
+<option>9 Months</option>
+<option>12 Months</option>
+<option>15 Months</option>
+<option>18 Months</option>
+<option>21 Months</option>
+<option>24 Months</option>
+<option>27 Months</option>
+<option>30 Months</option>
+<option>33 Months</option>
+<option>36 Months</option>
+<option>39 Months</option>
+<option>42 Months</option>
+<option>45 Months</option>
+<option>48 Months</option>
+<option>51 Months</option>
+<option>54 Months</option>
+<option>57 Months</option>
+<option>60 Months</option>
+</select>
+
+<br><br>
+
+<button onclick="compareStocks()">Compare Stocks</button>
+
+<h2>Comparison Result</h2>
+
+<div id="result">
+Results will appear here
+</div>
+
+<h2>Stock Comparison Graph</h2>
+
+<div class="chart-container">
+<canvas id="compareGraph"></canvas>
+</div>
+
+<hr>
+
+<footer>
+
+<p>© 2026 StocksPredictionWithMe</p>
+
+<p>
+Developed by <b>Aniket Raj</b><br>
+B.Tech Mathematics and Computing
+</p>
+
+</footer>
+
+<script>
+
+let chart;
+
+/* ----------- API KEYS ----------- */
+
+let API_KEY1="6NF61PLCY44CP118";
+let API_KEY2="1PZ08SFSK708ZSO3";
+let API_KEY3="2YTLJYV20KMCFP9H";
+
+/* ----------- FETCH STOCK DATA ----------- */
+
+async function getStockData(symbol,apiKey){
+
+try{
+
+let response=await fetch(
+`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${symbol}&apikey=${apiKey}`
+);
+
+let data=await response.json();
+
+let series=data["Time Series (Daily)"];
+
+if(!series){
+throw new Error("API error");
+}
+
+let prices=[];
+let labels=[];
+let count=0;
+
+for(let date in series){
+
+labels.push(date);
+prices.push(parseFloat(series[date]["4. close"]));
+
+count++;
+
+if(count===365) break;
+
+}
+
+labels.reverse();
+prices.reverse();
+
+return {labels,prices};
+
+}
+
+catch(error){
+
+document.getElementById("result").innerHTML="Error loading stock data.";
+
+return null;
+
+}
+
+}
+
+/* ----------- MAIN FUNCTION ----------- */
+
+async function compareStocks(){
+
+document.getElementById("result").innerHTML="Loading stock data...";
+
+let stock1=document.getElementById("stock1").value;
+let stock2=document.getElementById("stock2").value;
+let stock3=document.getElementById("stock3").value;
+
+let investment=document.getElementById("investment").value;
+
+let period=parseInt(document.getElementById("period").value);
+
+if(investment==""){
+document.getElementById("result").innerHTML="Enter investment amount";
+return;
+}
+
+let symbol1=stock1.match(/\((.*?)\)/)[1];
+let symbol2=stock2.match(/\((.*?)\)/)[1];
+
+let data1=await getStockData(symbol1,API_KEY1);
+let data2=await getStockData(symbol2,API_KEY2);
+
+if(!data1 || !data2){
+return;
+}
+
+let stocks=[
+{name:stock1,data:data1},
+{name:stock2,data:data2}
+];
+
+if(stock3!="None"){
+
+let symbol3=stock3.match(/\((.*?)\)/)[1];
+
+let data3=await getStockData(symbol3,API_KEY3);
+
+if(data3){
+stocks.push({name:stock3,data:data3});
+}
+
+}
+
+let results=[];
+let datasets=[];
+let colors=["#38bdf8","#22c55e","#f59e0b"];
+
+/* ----------- CALCULATIONS ----------- */
+
+stocks.forEach((stock,index)=>{
+
+let prices=stock.data.prices;
+
+let currentPrice=prices[prices.length-1];
+
+let oldestPrice=prices[0];
+
+let growthRate=(currentPrice-oldestPrice)/oldestPrice;
+
+let futurePrice=currentPrice*Math.pow((1+growthRate),period/12);
+
+let shares=investment/currentPrice;
+
+let futureValue=shares*futurePrice;
+
+let profit=futureValue-investment;
+
+results.push({
+name:stock.name,
+currentPrice,
+futurePrice,
+profit
+});
+
+datasets.push({
+
+label:stock.name,
+data:prices,
+borderColor:colors[index],
+fill:false,
+tension:0.2
+
+});
+
+});
+
+/* ----------- FIND BEST STOCK ----------- */
+
+let bestStock=results.reduce((a,b)=>a.profit>b.profit?a:b);
+
+/* ----------- TABLE RESULT ----------- */
+
+let html="<table>";
+
+html+="<tr><th>Stock</th><th>Current Price</th><th>Future Price</th><th>Profit</th></tr>";
+
+results.forEach(r=>{
+
+html+="<tr>";
+html+="<td>"+r.name+"</td>";
+html+="<td>$"+r.currentPrice.toFixed(2)+"</td>";
+html+="<td>$"+r.futurePrice.toFixed(2)+"</td>";
+html+="<td>$"+r.profit.toFixed(2)+"</td>";
+html+="</tr>";
+
+});
+
+html+="</table>";
+
+html+="<br><b>Best Investment: "+bestStock.name+"</b>";
+
+document.getElementById("result").innerHTML=html;
+
+/* ----------- GRAPH ----------- */
+
+let ctx=document.getElementById("compareGraph").getContext("2d");
+
+if(chart){
+chart.destroy();
+}
+
+chart=new Chart(ctx,{
+
+type:"line",
+
+data:{
+labels:stocks[0].data.labels,
+
+datasets:datasets
+
+},
+
+options:{
+
+responsive:true,
+
+maintainAspectRatio:false,
+
+plugins:{
+
+title:{
+display:true,
+text:"Stock Performance Comparison (Past 1 Year)",
+font:{size:18}
+},
+
+legend:{
+position:"top"
+}
+
+},
+
+interaction:{
+mode:"index",
+intersect:false
+},
+
+scales:{
+
+x:{
+ticks:{
+maxTicksLimit:10
+}
+},
+
+y:{
+title:{
+display:true,
+text:"Price ($)"
+}
+}
+
+},
+
+elements:{
+line:{
+tension:0.3,
+borderWidth:3
+},
+point:{
+radius:0
+}
+}
+
+}
+
+});
+
+}
+
+</script>
+
+</body>
+</html>
