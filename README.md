@@ -99,8 +99,8 @@ For comparison mode, the system also identifies **which stock could provide the 
 <img width="1912" height="881" alt="Home01" src="https://github.com/user-attachments/assets/c1e5d43d-1723-4a49-8a1e-d5d8905d54b5" />
 <img width="1918" height="907" alt="Home02" src="https://github.com/user-attachments/assets/ec767863-6b09-4ab5-b3e7-fec8cc9d2545" />
 <img width="1918" height="905" alt="Home03" src="https://github.com/user-attachments/assets/5886b897-2a52-4d7e-8d50-501918bb8a74" />
-<img width="1918" height="912" alt="Prediction01" src="https://github.com/user-attachments/assets/4201e544-d1d8-42e0-be71-e4f6391045ce" />
-<img width="1918" height="915" alt="Prediction02" src="https://github.com/user-attachments/assets/3f9aff74-23ed-4ade-a60e-04d790e2c5e4" />
+<img width="1918" height="912" alt="Prediction01" src="https://github.com/user-attachments/assets/db7c45d0-443a-40a5-8764-6dc481d0438b" />
+<img width="1918" height="887" alt="Prediction02" src="https://github.com/user-attachments/assets/ebc40086-92f9-4c77-b274-a3438a326871" />
 <img width="1911" height="912" alt="Compare01" src="https://github.com/user-attachments/assets/588c416d-3bd8-4333-85da-25b2b92dc598" />
 <img width="1917" height="910" alt="Compare02" src="https://github.com/user-attachments/assets/5eef4102-abe9-4dc2-bce7-23d19fa82419" />
 <img width="1918" height="901" alt="About" src="https://github.com/user-attachments/assets/003f4192-9de3-4a53-bfb6-f42ab1447b0b" />
