@@ -33,13 +33,17 @@ margin:0 15px;
 font-weight:bold;
 }
 
-nav a:hover
+nav a:hover{
+color:#38bdf8;
+}
 
 /* HEADINGS */
 
 h1{
 text-align:center;
 margin-top:40px;
+word-wrap:break-word;
+overflow-wrap:break-word;
 }
 
 h2{
@@ -57,8 +61,6 @@ line-height:1.6;
 ul{
 margin-left:40px;
 }
-
-/* LIST SPACING IMPROVEMENT */
 
 ul li{
 margin:8px 0;
@@ -79,6 +81,7 @@ background:#1e293b;
 border-radius:10px;
 margin-top:40px;
 box-shadow:0 0 15px rgba(0,0,0,0.3);
+text-align:center;
 }
 
 /* RESULT BOX */
@@ -98,7 +101,7 @@ font-size:18px;
 position:relative;
 width:100%;
 max-width:900px;
-height:400px;
+height:420px;
 margin:auto;
 margin-top:30px;
 }
@@ -139,7 +142,7 @@ width:320px;
 text-align:center;
 }
 
-/* TABLE STYLE (NEW FOR COMPARISON PAGE) */
+/* TABLE STYLE */
 
 table{
 border-collapse:collapse;
@@ -182,7 +185,9 @@ cursor:pointer;
 margin:20px;
 }
 
-button:hover
+button:hover{
+background:#0ea5e9;
+}
 
 /* LOADER */
 
@@ -205,6 +210,30 @@ animation:spin 1s linear infinite;
 @keyframes spin{
 0%{transform:rotate(0deg);}
 100%{transform:rotate(360deg);}
+}
+
+/* HERO / INTRO SECTION FIX */
+
+.hero{
+text-align:center;
+margin-top:60px;
+}
+
+.hero h1{
+font-size:40px;
+margin-bottom:10px;
+}
+
+.hero p{
+font-size:18px;
+margin-top:10px;
+}
+
+.hero-tagline{
+margin-top:20px;
+font-size:20px;
+font-weight:bold;
+letter-spacing:1px;
 }
 
 /* MOBILE RESPONSIVE */
@@ -242,6 +271,20 @@ margin:auto;
 margin-top:20px;
 }
 
+h1{
+font-size:28px;
+text-align:center;
+}
+
+.hero h1{
+font-size:30px;
+}
+
+.hero-tagline{
+font-size:16px;
+margin-top:15px;
+}
+
 h2{
 margin-left:10px;
 }
@@ -267,14 +310,6 @@ font-size:22px;
 margin:10px;
 }
 
-
 footer a:hover{
 color:#38bdf8;
-}
-
-.chart-container{
-width:100%;
-max-width:900px;
-height:420px;
-margin:auto;
 }
