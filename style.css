@@ -33,9 +33,7 @@ margin:0 15px;
 font-weight:bold;
 }
 
-nav a:hover{
-color:#38bdf8;
-}
+nav a:hover
 
 /* HEADINGS */
 
@@ -94,7 +92,7 @@ text-align:center;
 font-size:18px;
 }
 
-/* GRAPH CONTAINER (IMPORTANT FIX) */
+/* GRAPH CONTAINER */
 
 .chart-container{
 position:relative;
@@ -105,11 +103,22 @@ margin:auto;
 margin-top:30px;
 }
 
-/* GRAPH CANVAS */
+/* MAIN GRAPH */
 
 #graph{
 background:#1e293b;
 border-radius:10px;
+}
+
+/* COMPARE GRAPH */
+
+#compareGraph{
+background:#1e293b;
+border-radius:10px;
+max-width:900px;
+margin:auto;
+display:block;
+margin-top:30px;
 }
 
 /* MULTIPLE CHARTS */
@@ -128,6 +137,26 @@ padding:20px;
 border-radius:10px;
 width:320px;
 text-align:center;
+}
+
+/* TABLE STYLE (NEW FOR COMPARISON PAGE) */
+
+table{
+border-collapse:collapse;
+margin:auto;
+margin-top:20px;
+background:#1e293b;
+}
+
+th,td{
+padding:12px 18px;
+text-align:center;
+border:1px solid #334155;
+}
+
+th{
+background:#0ea5e9;
+color:white;
 }
 
 /* INPUT + SELECT */
@@ -153,9 +182,7 @@ cursor:pointer;
 margin:20px;
 }
 
-button:hover{
-background:#0ea5e9;
-}
+button:hover
 
 /* LOADER */
 
@@ -240,6 +267,14 @@ font-size:22px;
 margin:10px;
 }
 
+
 footer a:hover{
 color:#38bdf8;
+}
+
+.chart-container{
+width:100%;
+max-width:900px;
+height:420px;
+margin:auto;
 }
