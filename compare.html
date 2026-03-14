@@ -430,15 +430,12 @@ type:"line",
 
 data:{
 labels:stocks[0].data.labels,
-
 datasets:datasets
-
 },
 
 options:{
 
 responsive:true,
-
 maintainAspectRatio:false,
 
 plugins:{
@@ -450,7 +447,11 @@ font:{size:18}
 },
 
 legend:{
-position:"top"
+position:"top",
+labels:{
+color:"white",
+usePointStyle:true
+}
 }
 
 },
@@ -464,27 +465,42 @@ scales:{
 
 x:{
 ticks:{
-maxTicksLimit:10
+maxTicksLimit:10,
+color:"white"
+},
+grid:{
+color:"#334155"
 }
 },
 
 y:{
 title:{
 display:true,
-text:"Price ($)"
+text:"Price ($)",
+color:"white"
+},
+ticks:{
+color:"white"
+},
+grid:{
+color:"#334155"
 }
 }
 
 },
 
 elements:{
+
 line:{
 tension:0.3,
 borderWidth:3
 },
+
 point:{
-radius:0
+radius:3,
+hoverRadius:6
 }
+
 }
 
 }
