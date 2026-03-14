@@ -144,11 +144,18 @@ text-align:center;
 
 /* TABLE STYLE */
 
+.table-container{
+width:100%;
+overflow-x:auto;
+margin-top:20px;
+}
+
 table{
+width:100%;
 border-collapse:collapse;
 margin:auto;
-margin-top:20px;
 background:#1e293b;
+min-width:500px;
 }
 
 th,td{
@@ -160,6 +167,10 @@ border:1px solid #334155;
 th{
 background:#0ea5e9;
 color:white;
+}
+
+tr:nth-child(even){
+background:#243447;
 }
 
 /* INPUT + SELECT */
