@@ -395,7 +395,7 @@ let bestStock=results.reduce((a,b)=>a.profit>b.profit?a:b);
 
 /* ----------- TABLE RESULT ----------- */
 
-let html="<table>";
+let html="<div class='table-container'><table>";
 
 html+="<tr><th>Stock</th><th>Current Price</th><th>Future Price</th><th>Profit</th></tr>";
 
@@ -410,7 +410,7 @@ html+="</tr>";
 
 });
 
-html+="</table>";
+html+="</table></div>";
 
 html+="<br><b>Best Investment: "+bestStock.name+"</b>";
 
